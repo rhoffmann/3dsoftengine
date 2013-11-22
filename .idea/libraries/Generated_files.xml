@@ -7,7 +7,7 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/softengine/src/softengine.device.js" />
+      <root url="file://$PROJECT_DIR$/softengine/softengine.device.js" />
       <root url="file://$PROJECT_DIR$/app.js" />
     </CLASSES>
     <SOURCES />

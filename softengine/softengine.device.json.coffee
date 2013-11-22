@@ -1,7 +1,6 @@
 do (SoftEngine = {}) ->
 
     SoftEngine.Device::LoadJSONFile = (fileName, callback) ->
-
         jsonObject = {}
         xmlhttp = new XMLHttpRequest()
         xmlhttp.open "GET", fileName, true

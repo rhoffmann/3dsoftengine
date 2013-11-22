@@ -1,4 +1,5 @@
 do (SoftEngine = {}) ->
+
     SoftEngine.Device::drawBLine = (p0, p1) ->
         x0 = p0.x >> 0
         y0 = p0.y >> 0

@@ -36,8 +36,8 @@
         var i, _ref;
         this.workingContext.clearRect(0, 0, this.workingWidth, this.workingHeight);
         this.backbuffer = this.workingContext.getImageData(0, 0, this.workingWidth, this.workingHeight);
-        for (i = 0, _ref = this.depthbuffer.length; 0 <= _ref ? i <= _ref : i >= _ref; 0 <= _ref ? i++ : i--) {
-          this.depthbuffer[i] = 1000000;
+        for (i = 0, _ref = this.depthbuffer.length; i < _ref; i += 1) {
+          this.depthbuffer[i] = 10000000;
         }
       };
 
@@ -90,12 +90,12 @@
         point = BABYLON.Vector3.TransformCoordinates(coord, transMat);
         x = point.x * this.workingWidth + this.workingWidth / 2.0 >> 0;
         y = -point.y * this.workingHeight + this.workingHeight / 2.0 >> 0;
-        return new BABYLON.Vector2(x, y, point.z);
+        return new BABYLON.Vector3(x, y, point.z);
       };
 
       Device.prototype.drawPoint = function(point, color) {
         if (point.x >= 0 && point.y >= 0 && point.x < this.workingWidth && point.y < this.workingHeight) {
-          return this.putPixel(point.x, point.y, color);
+          return this.putPixel(point.x, point.y, point.z, color);
         }
       };
 
@@ -117,7 +117,7 @@
             pB = this.project(vertexB, transformMatrix);
             pC = this.project(vertexC, transformMatrix);
             color = 0.25 + ((indexFaces % cMesh.Faces.length) / cMesh.Faces.length) * 0.75;
-            this.drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1));
+            this.drawTriangle(pA, pB, pC, new BABYLON.Color4(1, color, color, 1));
           }
         }
       };
@@ -133,27 +133,31 @@
       };
 
       Device.prototype.processScanLine = function(y, pa, pb, pc, pd, color) {
-        var ex, gradient1, gradient2, sx, x, _results;
-        gradient1 = pa.y !== pb.y ? (y - pa.y) / (pb.y - pa.y) : 1;
-        gradient2 = pc.y !== pd.y ? (y - pc.y) / (pd.y - pc.y) : 1;
+        var ex, gradient, gradient1, gradient2, sx, x, z, z1, z2;
+        gradient1 = pa.y != pb.y ? (y - pa.y) / (pb.y - pa.y) : 1;
+        gradient2 = pc.y != pd.y ? (y - pc.y) / (pd.y - pc.y) : 1;
         sx = this.interpolate(pa.x, pb.x, gradient1) >> 0;
         ex = this.interpolate(pc.x, pd.x, gradient2) >> 0;
-        _results = [];
-        for (x = sx; sx <= ex ? x <= ex : x >= ex; sx <= ex ? x++ : x--) {
-          _results.push(this.drawPoint(new BABYLON.Vector2(x, y), color));
+        z1 = this.interpolate(pa.z, pb.z, gradient1);
+        z2 = this.interpolate(pc.z, pd.z, gradient2);
+        for (x = sx; x < ex; x += 1) {
+          gradient = (x - sx) / (ex - sx);
+          z = this.interpolate(z1, z2, gradient);
+          this.drawPoint(new BABYLON.Vector3(x, y, z), color);
         }
-        return _results;
       };
 
       Device.prototype.drawTriangle = function(p1, p2, p3, color) {
-        var dP1P2, dP1P3, y, _ref, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7;
+        var dP1P2, dP1P3, p1_y, p3_y, y, _ref, _ref2, _ref3;
         if (p1.y > p2.y) _ref = [p1, p2], p2 = _ref[0], p1 = _ref[1];
         if (p2.y > p3.y) _ref2 = [p3, p2], p2 = _ref2[0], p3 = _ref2[1];
         if (p1.y > p2.y) _ref3 = [p1, p2], p2 = _ref3[0], p1 = _ref3[1];
         dP1P2 = p2.y - p1.y > 0 ? (p2.x - p1.x) / (p2.y - p1.y) : 0;
         dP1P3 = p3.y - p1.y > 0 ? (p3.x - p1.x) / (p3.y - p1.y) : 0;
         if (dP1P2 > dP1P3) {
-          for (y = _ref4 = p1.y >> 0, _ref5 = p3.y >> 0; _ref4 <= _ref5 ? y < _ref5 : y > _ref5; _ref4 <= _ref5 ? y++ : y--) {
+          p1_y = p1.y >> 0;
+          p3_y = p3.y >> 0;
+          for (y = p1_y; y <= p3_y; y += 1) {
             if (y < p2.y) {
               this.processScanLine(y, p1, p3, p1, p2, color);
             } else {
@@ -163,7 +167,9 @@
           return;
         }
         if (dP1P2 < dP1P3) {
-          for (y = _ref6 = p1.y >> 0, _ref7 = p3.y >> 0; _ref6 <= _ref7 ? y < _ref7 : y > _ref7; _ref6 <= _ref7 ? y++ : y--) {
+          p1_y = p1.y >> 0;
+          p3_y = p3.y >> 0;
+          for (y = p1_y; y <= p3_y; y += 1) {
             if (y < p2.y) {
               this.processScanLine(y, p1, p2, p1, p3, color);
             } else {

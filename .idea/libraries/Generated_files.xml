@@ -2,12 +2,22 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/softengine/src/softengine.device.js" />
+        <item url="file://$PROJECT_DIR$/softengine/softengine.device.json.js" />
+        <item url="file://$PROJECT_DIR$/softengine/softengine.device.drawline.js" />
+        <item url="file://$PROJECT_DIR$/softengine/softengine.device.drawbline.js" />
+        <item url="file://$PROJECT_DIR$/softengine/softengine.device.js" />
+        <item url="file://$PROJECT_DIR$/softengine/softengine.device.debug.js" />
+        <item url="file://$PROJECT_DIR$/softengine/softengine.js" />
         <item url="file://$PROJECT_DIR$/app.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/softengine/softengine.device.json.js" />
+      <root url="file://$PROJECT_DIR$/softengine/softengine.device.drawline.js" />
+      <root url="file://$PROJECT_DIR$/softengine/softengine.device.drawbline.js" />
       <root url="file://$PROJECT_DIR$/softengine/softengine.device.js" />
+      <root url="file://$PROJECT_DIR$/softengine/softengine.device.debug.js" />
+      <root url="file://$PROJECT_DIR$/softengine/softengine.js" />
       <root url="file://$PROJECT_DIR$/app.js" />
     </CLASSES>
     <SOURCES />

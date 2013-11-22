@@ -12,7 +12,6 @@
   mesh = null;
 
   init = function() {
-    console.log("init");
     canvas = document.getElementById("scene");
     cam = new SoftEngine.Camera();
     device = new SoftEngine.Device(canvas, true);

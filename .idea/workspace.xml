@@ -23,40 +23,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.coffee" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="415" selection-end="415" vertical-scroll-proportion="0.5363129" vertical-offset="36" max-vertical-offset="792">
+            <state line="10" column="32" selection-start="187" selection-end="187" vertical-scroll-proportion="-8.0" vertical-offset="0" max-vertical-offset="860">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="softengine.device.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="softengine.device.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="114" column="61" selection-start="4993" selection-end="4993" vertical-scroll-proportion="-11.6" vertical-offset="1690" max-vertical-offset="2718">
-              <folding>
-                <element signature="e#334#590#0" expanded="false" />
-                <element signature="e#6498#7894#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="0" selection-start="349" selection-end="349" vertical-scroll-proportion="-6.75" vertical-offset="0" max-vertical-offset="378">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="softengine.device.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/softengine/softengine.device.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="176" column="17" selection-start="8337" selection-end="8337" vertical-scroll-proportion="0.0" vertical-offset="2655" max-vertical-offset="3600">
+            <state line="85" column="0" selection-start="3401" selection-end="3401" vertical-scroll-proportion="0.8820024" vertical-offset="960" max-vertical-offset="4360">
               <folding />
             </state>
           </provider>
@@ -85,9 +64,9 @@
         <option value="$PROJECT_DIR$/softengine/src/softengine.device.json.coffee" />
         <option value="$PROJECT_DIR$/softengine/src/softengine.device.drawline.coffee" />
         <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/app.coffee" />
         <option value="$PROJECT_DIR$/softengine/softengine.device.js" />
         <option value="$PROJECT_DIR$/softengine/src/softengine.device.coffee" />
-        <option value="$PROJECT_DIR$/app.coffee" />
       </list>
     </option>
   </component>
@@ -183,6 +162,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="reference.settingsdialog.IDE.editor.colors.Font" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="FullScreen" value="false" />
     <property name="DefaultHtmlFileTemplate" value="Html5" />
     <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
@@ -213,6 +193,13 @@
       <option name="showConsoleOnStdOut" value="false" />
       <method />
     </configuration>
+    <configuration default="true" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver">
+      <setting name="configLocationType" value="CONFIG_FILE" />
+      <setting name="settingsFile" value="" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
     <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
       <envs />
       <method />
@@ -239,23 +226,24 @@
     <frame x="688" y="22" width="1206" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32954547" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Heroku" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22823331" sideWeight="0.67045456" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22823331" sideWeight="0.28636363" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.22823331" sideWeight="0.28636363" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32954547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -293,122 +281,88 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.htaccess">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="33" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="562">
-          <folding />
-        </state>
+        <state line="0" column="33" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="562" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.debug.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="46" selection-start="111" selection-end="111" vertical-scroll-proportion="0.06703911" vertical-offset="0" max-vertical-offset="537">
-          <folding />
-        </state>
+        <state line="2" column="46" selection-start="111" selection-end="111" vertical-scroll-proportion="0.06703911" vertical-offset="0" max-vertical-offset="537" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/monkeyandball.babylon">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="39" selection-start="67283" selection-end="67283" vertical-scroll-proportion="0.13114753" vertical-offset="0" max-vertical-offset="549">
-          <folding />
-        </state>
+        <state line="4" column="39" selection-start="67283" selection-end="67283" vertical-scroll-proportion="0.13114753" vertical-offset="0" max-vertical-offset="549" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/src/softengine.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="537">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="537" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/softengine.device.drawline.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="35" selection-start="415" selection-end="415" vertical-scroll-proportion="0.35231316" vertical-offset="0" max-vertical-offset="562">
-          <folding />
-        </state>
+        <state line="11" column="35" selection-start="415" selection-end="415" vertical-scroll-proportion="0.35231316" vertical-offset="0" max-vertical-offset="562" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.drawbline.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="70" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="576">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="70" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="576" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.drawline.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="34" selection-start="269" selection-end="269" vertical-scroll-proportion="0.26815644" vertical-offset="0" max-vertical-offset="537">
-          <folding />
-        </state>
+        <state line="8" column="34" selection-start="269" selection-end="269" vertical-scroll-proportion="0.26815644" vertical-offset="0" max-vertical-offset="537" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.json.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="0" selection-start="1598" selection-end="1598" vertical-scroll-proportion="0.02793296" vertical-offset="795" max-vertical-offset="1332">
-          <folding />
-        </state>
+        <state line="45" column="0" selection-start="1598" selection-end="1598" vertical-scroll-proportion="0.02793296" vertical-offset="795" max-vertical-offset="1332" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/softengine.device.drawbline.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="300" selection-end="300" vertical-scroll-proportion="0.28825623" vertical-offset="0" max-vertical-offset="756">
-          <folding />
-        </state>
+        <state line="9" column="17" selection-start="300" selection-end="300" vertical-scroll-proportion="0.28825623" vertical-offset="0" max-vertical-offset="756" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/softengine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="7" selection-start="189" selection-end="189" vertical-scroll-proportion="0.3202847" vertical-offset="0" max-vertical-offset="720">
-          <folding />
-        </state>
+        <state line="10" column="7" selection-start="189" selection-end="189" vertical-scroll-proportion="0.3202847" vertical-offset="0" max-vertical-offset="720" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/softengine.device.json.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="17" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.21311475" vertical-offset="513" max-vertical-offset="1350">
-          <folding />
-        </state>
+        <state line="35" column="17" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.21311475" vertical-offset="513" max-vertical-offset="1350" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="4" selection-start="632" selection-end="632" vertical-scroll-proportion="0.56049824" vertical-offset="135" max-vertical-offset="882">
-          <folding>
-            <marker date="1385132954000" expanded="true" signature="-1:-1" placeholder="{...}" />
-            <marker date="1385132954000" expanded="true" signature="-1:-1" placeholder="{&quot;A&quot;: 0...}" />
-            <marker date="1385132954000" expanded="true" signature="-1:-1" placeholder="{&quot;A&quot;: 0...}" />
-            <marker date="1385132954000" expanded="true" signature="-1:-1" placeholder="{&quot;A&quot;: 4...}" />
-            <marker date="1385132954000" expanded="true" signature="-1:-1" placeholder="{&quot;A&quot;: 4...}" />
-            <marker date="1385132954000" expanded="true" signature="-1:-1" placeholder="{...}" />
-          </folding>
+        <state line="25" column="4" selection-start="632" selection-end="632" vertical-scroll-proportion="0.56049824" vertical-offset="135" max-vertical-offset="882" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="32" selection-start="187" selection-end="187" vertical-scroll-proportion="-8.0" vertical-offset="0" max-vertical-offset="860">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/softengine.device.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="17" selection-start="8337" selection-end="8337" vertical-scroll-proportion="0.0" vertical-offset="2655" max-vertical-offset="3600">
+        <state line="66" column="10" selection-start="3189" selection-end="3189" vertical-scroll-proportion="-0.9785459" vertical-offset="2141" max-vertical-offset="3700">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="349" selection-end="349" vertical-scroll-proportion="0.21791768" vertical-offset="0" max-vertical-offset="826">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="114" column="61" selection-start="4993" selection-end="4993" vertical-scroll-proportion="-11.6" vertical-offset="1690" max-vertical-offset="2718">
-          <folding>
-            <element signature="e#334#590#0" expanded="false" />
-            <element signature="e#6498#7894#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="349" selection-end="349" vertical-scroll-proportion="-6.75" vertical-offset="0" max-vertical-offset="378">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="415" selection-end="415" vertical-scroll-proportion="0.5363129" vertical-offset="36" max-vertical-offset="792">
+        <state line="85" column="0" selection-start="3401" selection-end="3401" vertical-scroll-proportion="0.8820024" vertical-offset="960" max-vertical-offset="4360">
           <folding />
         </state>
       </provider>

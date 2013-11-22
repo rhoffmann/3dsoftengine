@@ -5,7 +5,6 @@ cam = null
 mesh = null
 
 init = ->
-    console.log "init"
     canvas = document.getElementById("scene")
 
     cam = new SoftEngine.Camera()
@@ -29,7 +28,7 @@ drawingLoop = ->
     device.render(cam, meshes)
     device.present()
 
-    #device.renderCoordinates(cam, meshes)
+#    device.renderCoordinates(cam, meshes)
 #    device.debug("hallo")
 
     requestAnimationFrame(drawingLoop)

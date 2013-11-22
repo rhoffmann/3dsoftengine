@@ -13,6 +13,7 @@ do (SoftEngine = {}) ->
             @workingWidth = @workingCanvas.width
             @workingHeight = @workingCanvas.height
             @workingContext = @workingCanvas.getContext '2d'
+            @depthbuffer = new Array(@workingWidth * @workingHeight)
             @workingContext.fillStyle = "#000"
             @workingContext.font = "normal 10px sans-serif";
 
@@ -24,6 +25,10 @@ do (SoftEngine = {}) ->
         clear : ->
             @workingContext.clearRect(0, 0, @workingWidth, @workingHeight)
             @backbuffer = @workingContext.getImageData(0, 0, @workingWidth, @workingHeight)
+            for i in [0..@depthbuffer.length]
+                @depthbuffer[i] = 1000000
+
+            return
 
         present : ->
             @workingContext.putImageData(@backbuffer, 0, 0)
@@ -60,18 +65,24 @@ do (SoftEngine = {}) ->
                         projectedPoint = @project( vertice, transformMatrix )
                         @workingContext.fillText "(#{projectedPoint.x},#{projectedPoint.y})", projectedPoint.x, projectedPoint.y
 
-        putPixel : (x, y, color) ->
+            return
+
+        putPixel : (x, y, z, color) ->
             @backbufferdata = @backbuffer.data
             # As we have a 1-D Array for our back buffer
             # we need to know the equivalent cell index in 1-D based
             # on the 2D coordinates of the screen
-            index = ((x >> 0) + (y >> 0) * @workingWidth) * 4
+            index = ((x >> 0) + (y >> 0) * @workingWidth)
+            index4 = index * 4
+
+            return if @depthbuffer[index] < z
+            @depthbuffer[index] = z
 
             # RGBA color space in HTML5 canvas
-            @backbufferdata[index]      = color.r * 255;
-            @backbufferdata[index + 1]  = color.g * 255;
-            @backbufferdata[index + 2]  = color.b * 255;
-            @backbufferdata[index + 3]  = color.a * 255;
+            @backbufferdata[index4]      = color.r * 255;
+            @backbufferdata[index4 + 1]  = color.g * 255;
+            @backbufferdata[index4 + 2]  = color.b * 255;
+            @backbufferdata[index4 + 3]  = color.a * 255;
 
         project : (coord, transMat) ->
             point = BABYLON.Vector3.TransformCoordinates(coord, transMat)
@@ -119,6 +130,8 @@ do (SoftEngine = {}) ->
                     color = 0.25 + ((indexFaces % cMesh.Faces.length) / cMesh.Faces.length) * 0.75;
 
                     @drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1))
+
+            return
 
         # keep a value between 0 and 1
         clamp : (value, min = 0, max = 1) -> Math.max min, Math.min(value, max)
@@ -171,6 +184,8 @@ do (SoftEngine = {}) ->
                     else
                         @processScanLine(y, p1, p3, p2, p3, color)
 
+                return
+
             # case: triangles like that
             #       P1
             #        -
@@ -190,6 +205,8 @@ do (SoftEngine = {}) ->
                         @processScanLine(y, p1, p2, p1, p3, color)
                     else
                         @processScanLine(y, p2, p3, p1, p3, color)
+
+                return
 
     SoftEngine.Device = Device
 

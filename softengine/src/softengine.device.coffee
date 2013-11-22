@@ -1,13 +1,25 @@
 do (SoftEngine = {}) ->
 
     class Device
-        constructor : (canvas) ->
+
+        constructor : (canvas, fullscreen = false) ->
             @workingCanvas = canvas
-            @workingWidth = canvas.width
-            @workingHeight = canvas.height
+            @setupCanvas()
+            if fullscreen
+                window.addEventListener 'resize', @onResizeCanvas, false
+                @onResizeCanvas()
+
+        setupCanvas : () ->
+            @workingWidth = @workingCanvas.width
+            @workingHeight = @workingCanvas.height
             @workingContext = @workingCanvas.getContext '2d'
             @workingContext.fillStyle = "#000"
             @workingContext.font = "normal 10px sans-serif";
+
+        onResizeCanvas : =>
+            @workingCanvas.width = window.innerWidth
+            @workingCanvas.height = window.innerHeight
+            @setupCanvas()
 
         clear : ->
             @workingContext.clearRect(0, 0, @workingWidth, @workingHeight)
@@ -107,17 +119,6 @@ do (SoftEngine = {}) ->
                 )
 
                 transformMatrix = worldMatrix.multiply( viewMatrix ).multiply( projectionMatrix )
-
-                # renders the meshes
-#                for vertice in cMesh.Vertices
-#                    projectedPoint = @project( vertice, transformMatrix )
-#                    @drawPoint projectedPoint
-
-                # renders lines
-#                for i in [0 ... cMesh.Vertices.length - 1]
-#                    p0 = @project( cMesh.Vertices[i], transformMatrix )
-#                    p1 = @project( cMesh.Vertices[i+1], transformMatrix )
-#                    @drawBLine(p0, p1)
 
                 # renders faces
                 for currentFace in cMesh.Faces

@@ -1,18 +1,35 @@
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   (function(SoftEngine) {
     var Device;
     if (SoftEngine == null) SoftEngine = {};
     Device = (function() {
 
-      function Device(canvas) {
+      function Device(canvas, fullscreen) {
+        if (fullscreen == null) fullscreen = false;
+        this.onResizeCanvas = __bind(this.onResizeCanvas, this);
         this.workingCanvas = canvas;
-        this.workingWidth = canvas.width;
-        this.workingHeight = canvas.height;
+        this.setupCanvas();
+        if (fullscreen) {
+          window.addEventListener('resize', this.onResizeCanvas, false);
+          this.onResizeCanvas();
+        }
+      }
+
+      Device.prototype.setupCanvas = function() {
+        this.workingWidth = this.workingCanvas.width;
+        this.workingHeight = this.workingCanvas.height;
         this.workingContext = this.workingCanvas.getContext('2d');
         this.workingContext.fillStyle = "#000";
-        this.workingContext.font = "normal 10px sans-serif";
-      }
+        return this.workingContext.font = "normal 10px sans-serif";
+      };
+
+      Device.prototype.onResizeCanvas = function() {
+        this.workingCanvas.width = window.innerWidth;
+        this.workingCanvas.height = window.innerHeight;
+        return this.setupCanvas();
+      };
 
       Device.prototype.clear = function() {
         this.workingContext.clearRect(0, 0, this.workingWidth, this.workingHeight);

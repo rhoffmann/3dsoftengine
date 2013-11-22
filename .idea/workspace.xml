@@ -23,38 +23,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="softengine.device.coffee" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="softengine.device.coffee" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="635" selection-end="635" vertical-scroll-proportion="-12.96" vertical-offset="0" max-vertical-offset="1404">
+            <state line="122" column="0" selection-start="4964" selection-end="4964" vertical-scroll-proportion="0.27480915" vertical-offset="1602" max-vertical-offset="2160">
               <folding>
-                <element signature="e#2150#2698#0" expanded="false" />
-                <element signature="e#2751#3259#0" expanded="false" />
-                <element signature="e#3305#3470#0" expanded="false" />
-                <element signature="e#3515#3761#0" expanded="false" />
-                <element signature="e#3813#5625#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="softengine.device.json.coffee" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.json.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="30" selection-start="435" selection-end="435" vertical-scroll-proportion="0.33519554" vertical-offset="0" max-vertical-offset="537">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="softengine.device.drawbline.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/softengine/softengine.device.drawbline.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="17" selection-start="300" selection-end="300" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
-              <folding>
-                <marker date="1385061350000" expanded="true" signature="12:874" placeholder="{...}" />
-                <marker date="1385061350000" expanded="true" signature="39:857" placeholder="{...}" />
-                <marker date="1385061350000" expanded="true" signature="154:852" placeholder="{...}" />
+                <element signature="e#2540#3088#0" expanded="false" />
+                <element signature="e#3141#3649#0" expanded="false" />
+                <element signature="e#3695#3860#0" expanded="false" />
+                <element signature="e#3905#4151#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -63,7 +40,25 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="28" selection-start="133" selection-end="133" vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="360">
+            <state line="9" column="55" selection-start="404" selection-end="404" vertical-scroll-proportion="-6.75" vertical-offset="0" max-vertical-offset="378">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="softengine.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/softengine/softengine.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="7" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="softengine.device.json.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/softengine/softengine.device.json.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="17" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.0" vertical-offset="513" max-vertical-offset="1350">
               <folding />
             </state>
           </provider>
@@ -72,7 +67,7 @@
       <file leaf-file-name="app.coffee" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="23" selection-start="1406" selection-end="1411" vertical-scroll-proportion="-41.76" vertical-offset="0" max-vertical-offset="1278">
+            <state line="14" column="45" selection-start="322" selection-end="322" vertical-scroll-proportion="-8.64" vertical-offset="36" max-vertical-offset="810">
               <folding />
             </state>
           </provider>
@@ -81,8 +76,15 @@
       <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="71" column="6" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.0" vertical-offset="963" max-vertical-offset="1746">
-              <folding />
+            <state line="25" column="4" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="882">
+              <folding>
+                <marker date="1385065137000" expanded="true" signature="178:256" placeholder="{...}" />
+                <marker date="1385065137000" expanded="true" signature="100:134" placeholder="{&quot;A&quot;: 0...}" />
+                <marker date="1385065137000" expanded="true" signature="136:165" placeholder="{&quot;A&quot;: 0...}" />
+                <marker date="1385065137000" expanded="true" signature="150:165" placeholder="{&quot;A&quot;: 4...}" />
+                <marker date="1385065137000" expanded="true" signature="167:294" placeholder="{&quot;A&quot;: 4...}" />
+                <marker date="1385065137000" expanded="true" signature="922:962" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,25 +99,27 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/bower.json" />
         <option value="$PROJECT_DIR$/softengine.device.js.coffee" />
         <option value="$PROJECT_DIR$/softengine.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/softengine.device.js" />
-        <option value="$PROJECT_DIR$/index.html" />
-        <option value="$PROJECT_DIR$/app.coffee" />
         <option value="$PROJECT_DIR$/softengine.device.debug.coffee" />
         <option value="$PROJECT_DIR$/softengine.device.coffee" />
         <option value="$PROJECT_DIR$/softengine.device.drawbline.coffee" />
         <option value="$PROJECT_DIR$/monkey.babylon" />
         <option value="$PROJECT_DIR$/softengine.device.json.coffee" />
         <option value="$PROJECT_DIR$/softengine/src/softengine.coffee" />
+        <option value="$PROJECT_DIR$/softengine/.htaccess" />
+        <option value="$PROJECT_DIR$/softengine/softengine.device.json.js" />
         <option value="$PROJECT_DIR$/softengine/src/softengine.device.json.coffee" />
+        <option value="$PROJECT_DIR$/index.html" />
+        <option value="$PROJECT_DIR$/app.coffee" />
+        <option value="$PROJECT_DIR$/softengine/src/softengine.device.coffee" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="664" />
+    <option name="x" value="688" />
     <option name="y" value="22" />
     <option name="width" value="1206" />
     <option name="height" value="1000" />
@@ -212,6 +216,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/softengine/src" />
       <recent name="$PROJECT_DIR$/softengine" />
     </key>
@@ -258,7 +263,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="664" y="22" width="1206" height="1000" extended-state="0" />
+    <frame x="688" y="22" width="1206" height="1000" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -311,27 +316,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/bower.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="305" selection-end="305" vertical-scroll-proportion="0.669145" vertical-offset="0" max-vertical-offset="538">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/softengine/babylon.math.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="26" selection-start="934" selection-end="934" vertical-scroll-proportion="0.33333334" vertical-offset="285" max-vertical-offset="8424">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/softengine/softengine.device.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="10" selection-start="3451" selection-end="3451" vertical-scroll-proportion="0.19672132" vertical-offset="1242" max-vertical-offset="2556">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/HTML5.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1233" column="35" selection-start="21406" selection-end="21406" vertical-scroll-proportion="0.33333334" vertical-offset="22011" max-vertical-offset="39096">
@@ -342,13 +326,6 @@
     <entry file="file://$PROJECT_DIR$/softengine/softengine.device.debug.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="246" selection-end="246" vertical-scroll-proportion="0.3202847" vertical-offset="0" max-vertical-offset="562">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.debug.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="46" selection-start="111" selection-end="111" vertical-scroll-proportion="0.06703911" vertical-offset="0" max-vertical-offset="537">
           <folding />
         </state>
       </provider>
@@ -367,34 +344,58 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/softengine/softengine.device.drawbline.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="300" selection-end="300" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
+        <state line="25" column="4" selection-start="632" selection-end="632" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="882">
           <folding>
-            <marker date="1385061350000" expanded="true" signature="12:874" placeholder="{...}" />
-            <marker date="1385061350000" expanded="true" signature="39:857" placeholder="{...}" />
-            <marker date="1385061350000" expanded="true" signature="154:852" placeholder="{...}" />
+            <marker date="1385065137000" expanded="true" signature="178:256" placeholder="{...}" />
+            <marker date="1385065137000" expanded="true" signature="100:134" placeholder="{&quot;A&quot;: 0...}" />
+            <marker date="1385065137000" expanded="true" signature="136:165" placeholder="{&quot;A&quot;: 0...}" />
+            <marker date="1385065137000" expanded="true" signature="150:165" placeholder="{&quot;A&quot;: 4...}" />
+            <marker date="1385065137000" expanded="true" signature="167:294" placeholder="{&quot;A&quot;: 4...}" />
+            <marker date="1385065137000" expanded="true" signature="922:962" placeholder="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/softengine/softengine.device.drawbline.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="28" selection-start="133" selection-end="133" vertical-scroll-proportion="-3.75" vertical-offset="0" max-vertical-offset="360">
+        <state line="9" column="17" selection-start="300" selection-end="300" vertical-scroll-proportion="0.28825623" vertical-offset="0" max-vertical-offset="756">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/.htaccess">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="71" column="6" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.0" vertical-offset="963" max-vertical-offset="1746">
+        <state line="0" column="33" selection-start="33" selection-end="33" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="562">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.coffee">
+    <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.debug.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="23" selection-start="1406" selection-end="1411" vertical-scroll-proportion="-41.76" vertical-offset="0" max-vertical-offset="1278">
+        <state line="2" column="46" selection-start="111" selection-end="111" vertical-scroll-proportion="0.06703911" vertical-offset="0" max-vertical-offset="537">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.json.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="0" selection-start="1598" selection-end="1598" vertical-scroll-proportion="0.7709497" vertical-offset="396" max-vertical-offset="1332">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/monkeyandball.babylon">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="39" selection-start="67283" selection-end="67283" vertical-scroll-proportion="0.13114753" vertical-offset="0" max-vertical-offset="549">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/softengine/softengine.device.json.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="17" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.0" vertical-offset="513" max-vertical-offset="1350">
           <folding />
         </state>
       </provider>
@@ -408,28 +409,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/softengine.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="7" selection-start="189" selection-end="189" vertical-scroll-proportion="0.3202847" vertical-offset="0" max-vertical-offset="720">
+        <state line="10" column="7" selection-start="189" selection-end="189" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="45" selection-start="322" selection-end="322" vertical-scroll-proportion="-8.64" vertical-offset="36" max-vertical-offset="810">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="55" selection-start="404" selection-end="404" vertical-scroll-proportion="-6.75" vertical-offset="0" max-vertical-offset="378">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="635" selection-end="635" vertical-scroll-proportion="-12.96" vertical-offset="0" max-vertical-offset="1404">
+        <state line="122" column="0" selection-start="4964" selection-end="4964" vertical-scroll-proportion="0.27480915" vertical-offset="1602" max-vertical-offset="2160">
           <folding>
-            <element signature="e#2150#2698#0" expanded="false" />
-            <element signature="e#2751#3259#0" expanded="false" />
-            <element signature="e#3305#3470#0" expanded="false" />
-            <element signature="e#3515#3761#0" expanded="false" />
-            <element signature="e#3813#5625#0" expanded="false" />
+            <element signature="e#2540#3088#0" expanded="false" />
+            <element signature="e#3141#3649#0" expanded="false" />
+            <element signature="e#3695#3860#0" expanded="false" />
+            <element signature="e#3905#4151#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/softengine/src/softengine.device.json.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="30" selection-start="435" selection-end="435" vertical-scroll-proportion="0.33519554" vertical-offset="0" max-vertical-offset="537">
-          <folding />
         </state>
       </provider>
     </entry>

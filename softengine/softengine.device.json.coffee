@@ -15,6 +15,17 @@ do (SoftEngine = {}) ->
     # special parser for babylon.js export files from blender
     SoftEngine.Device::CreateMeshesFromJSON = (jsonObject) ->
         meshes = []
+        materials = []
+
+        for mat in jsonObject.materials
+            material = {
+                Name : mat.name
+                ID : mat.id
+            }
+            if mat.diffuseTexture
+                material.DiffuseTextureName = mat.diffuseTexture.name
+                materials[material.ID] = material
+
         for importMesh in jsonObject.meshes
             verticesArray = importMesh.vertices
             indicesArray = importMesh.indices
@@ -56,8 +67,15 @@ do (SoftEngine = {}) ->
                 mesh.Vertices[index] = {
                     Coordinates : new BABYLON.Vector3(x, y, z)
                     Normal : new BABYLON.Vector3(nx, ny, nz)
-                    WorldCoordinates : null
                 }
+
+                # texture stuff
+                if uvCount > 0
+                    u = verticesArray[index * verticeStep + 6]
+                    v = verticesArray[index * verticeStep + 7]
+                    mesh.Vertices[index].TextureCoordinates = new BABYLON.Vector2(u, v)
+                else
+                    mesh.Vertices[index].TextureCoordinates = new BABYLON.Vector2(0, 0)
 
             # fill the faces array
             for index in [0 ... facesCount]
@@ -72,6 +90,12 @@ do (SoftEngine = {}) ->
             # get the position from blender
             position = importMesh.position
             mesh.Position = new BABYLON.Vector3( position[0], position[1], position[2] )
+
+            if uvCount > 0
+                meshTextureID = importMesh.materialId
+                meshTextureName = materials[meshTextureID].DiffuseTextureName
+                mesh.Texture = new SoftEngine.Texture(meshTextureName, 512, 512)
+
             meshes.push(mesh)
 
         return meshes

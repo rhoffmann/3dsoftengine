@@ -6,12 +6,15 @@
     if (SoftEngine == null) SoftEngine = {};
     Device = (function() {
 
-      function Device(canvas, fullscreen) {
-        if (fullscreen == null) fullscreen = false;
-        this.onResizeCanvas = __bind(this.onResizeCanvas, this);
-        this.workingCanvas = canvas;
+      Device.prototype.defaults = {
+        fullscreen: false
+      };
+
+      function Device(canvas, options) {
+        this.onResizeCanvas = __bind(this.onResizeCanvas, this);        this.workingCanvas = canvas;
         this.setupCanvas();
-        if (fullscreen) {
+        this.options = _.extend(this.defaults, options);
+        if (this.options.fullscreen) {
           window.addEventListener('resize', this.onResizeCanvas, false);
           this.onResizeCanvas();
         }
@@ -58,14 +61,14 @@
             _ref = cMesh.Vertices;
             for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
               vertice = _ref[_j];
-              projectedPoint = this.project(vertice, transformMatrix);
+              projectedPoint = this.project(vertice, transformMatrix, worldMatrix);
               this.workingContext.fillText("(" + vertice.x + "," + vertice.y + "," + vertice.z + ")", projectedPoint.x, projectedPoint.y);
             }
           } else {
             _ref2 = cMesh.Vertices;
             for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
               vertice = _ref2[_k];
-              projectedPoint = this.project(vertice, transformMatrix);
+              projectedPoint = this.project(vertice, transformMatrix, worldMatrix);
               this.workingContext.fillText("(" + projectedPoint.x + "," + projectedPoint.y + ")", projectedPoint.x, projectedPoint.y);
             }
           }
@@ -95,7 +98,8 @@
         return {
           Coordinates: new BABYLON.Vector3(x, y, point2d.z),
           Normal: normal3DWorld,
-          WorldCoordinates: point3DWorld
+          WorldCoordinates: point3DWorld,
+          TextureCoordinates: vertex.TextureCoordinates
         };
       };
 
@@ -123,7 +127,7 @@
             pB = this.project(vertexB, transformMatrix, worldMatrix);
             pC = this.project(vertexC, transformMatrix, worldMatrix);
             color = 1.0;
-            this.drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1));
+            this.drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1), cMesh.Texture);
           }
         }
       };
@@ -138,8 +142,8 @@
         return min + (max - min) * this.clamp(gradient);
       };
 
-      Device.prototype.processScanLine = function(data, va, vb, vc, vd, color) {
-        var enl, ex, gradient, gradient1, gradient2, ndotl, pa, pb, pc, pd, snl, sx, x, z, z1, z2;
+      Device.prototype.processScanLine = function(data, va, vb, vc, vd, color, texture) {
+        var enl, eu, ev, ex, gradient, gradient1, gradient2, ndotl, pa, pb, pc, pd, snl, su, sv, sx, textureColor, u, v, x, z, z1, z2;
         pa = va.Coordinates;
         pb = vb.Coordinates;
         pc = vc.Coordinates;
@@ -152,11 +156,22 @@
         z2 = this.interpolate(pc.z, pd.z, gradient2);
         snl = this.interpolate(data.ndotla, data.ndotlb, gradient1);
         enl = this.interpolate(data.ndotlc, data.ndotld, gradient2);
+        su = this.interpolate(data.ua, data.ub, gradient1);
+        eu = this.interpolate(data.uc, data.ud, gradient2);
+        sv = this.interpolate(data.va, data.vb, gradient1);
+        ev = this.interpolate(data.vc, data.vd, gradient2);
         for (x = sx; x < ex; x += 1) {
           gradient = (x - sx) / (ex - sx);
           z = this.interpolate(z1, z2, gradient);
           ndotl = this.interpolate(snl, enl, gradient);
-          this.drawPoint(new BABYLON.Vector3(x, data.currentY, z), new BABYLON.Color4(color.r * ndotl, color.g * ndotl, color.b * ndotl, 1));
+          u = this.interpolate(su, eu, gradient);
+          v = this.interpolate(sv, ev, gradient);
+          if (texture) {
+            textureColor = texture.map(u, v);
+          } else {
+            textureColor = new BABYLON.Color4(1, 1, 1, 1);
+          }
+          this.drawPoint(new BABYLON.Vector3(x, data.currentY, z), new BABYLON.Color4(color.r * ndotl * textureColor.r, color.g * ndotl * textureColor.g, color.b * ndotl * textureColor.b, 1));
         }
       };
 
@@ -168,7 +183,7 @@
         return Math.max(0, BABYLON.Vector3.Dot(normal, lightDirection));
       };
 
-      Device.prototype.drawTriangle = function(v1, v2, v3, color) {
+      Device.prototype.drawTriangle = function(v1, v2, v3, color, texture) {
         var dP1P2, dP1P3, data, lightPos, nl1, nl2, nl3, p1, p1_y, p2, p3, p3_y, y, _ref, _ref2, _ref3;
         if (v1.Coordinates.y > v2.Coordinates.y) {
           _ref = [v1, v2], v2 = _ref[0], v1 = _ref[1];
@@ -199,13 +214,29 @@
               data.ndotlb = nl3;
               data.ndotlc = nl1;
               data.ndotld = nl2;
-              this.processScanLine(data, v1, v3, v1, v2, color);
+              data.ua = v1.TextureCoordinates.x;
+              data.ub = v3.TextureCoordinates.x;
+              data.uc = v1.TextureCoordinates.x;
+              data.ud = v2.TextureCoordinates.x;
+              data.va = v1.TextureCoordinates.y;
+              data.vb = v3.TextureCoordinates.y;
+              data.vc = v1.TextureCoordinates.y;
+              data.vd = v2.TextureCoordinates.y;
+              this.processScanLine(data, v1, v3, v1, v2, color, texture);
             } else {
               data.ndotla = nl1;
               data.ndotlb = nl3;
               data.ndotlc = nl2;
               data.ndotld = nl3;
-              this.processScanLine(data, v1, v3, v2, v3, color);
+              data.ua = v1.TextureCoordinates.x;
+              data.ub = v3.TextureCoordinates.x;
+              data.uc = v2.TextureCoordinates.x;
+              data.ud = v3.TextureCoordinates.x;
+              data.va = v1.TextureCoordinates.y;
+              data.vb = v3.TextureCoordinates.y;
+              data.vc = v2.TextureCoordinates.y;
+              data.vd = v3.TextureCoordinates.y;
+              this.processScanLine(data, v1, v3, v2, v3, color, texture);
             }
           }
         } else {
@@ -218,13 +249,29 @@
               data.ndotlb = nl2;
               data.ndotlc = nl1;
               data.ndotld = nl3;
-              this.processScanLine(data, v1, v2, v1, v3, color);
+              data.ua = v1.TextureCoordinates.x;
+              data.ub = v2.TextureCoordinates.x;
+              data.uc = v1.TextureCoordinates.x;
+              data.ud = v3.TextureCoordinates.x;
+              data.va = v1.TextureCoordinates.y;
+              data.vb = v2.TextureCoordinates.y;
+              data.vc = v1.TextureCoordinates.y;
+              data.vd = v3.TextureCoordinates.y;
+              this.processScanLine(data, v1, v2, v1, v3, color, texture);
             } else {
               data.ndotla = nl2;
               data.ndotlb = nl3;
               data.ndotlc = nl1;
               data.ndotld = nl3;
-              this.processScanLine(data, v2, v3, v1, v3, color);
+              data.ua = v2.TextureCoordinates.x;
+              data.ub = v3.TextureCoordinates.x;
+              data.uc = v1.TextureCoordinates.x;
+              data.ud = v3.TextureCoordinates.x;
+              data.va = v2.TextureCoordinates.y;
+              data.vb = v3.TextureCoordinates.y;
+              data.vc = v1.TextureCoordinates.y;
+              data.vd = v3.TextureCoordinates.y;
+              this.processScanLine(data, v2, v3, v1, v3, color, texture);
             }
           }
         }

@@ -2,10 +2,15 @@ do (SoftEngine = {}) ->
 
     class Device
 
-        constructor : (canvas, fullscreen = false) ->
+        defaults :
+            fullscreen : false
+
+        constructor : (canvas, options) ->
             @workingCanvas = canvas
             @setupCanvas()
-            if fullscreen
+            @options = _.extend @defaults, options
+
+            if @options.fullscreen
                 window.addEventListener 'resize', @onResizeCanvas, false
                 @onResizeCanvas()
 
@@ -56,13 +61,13 @@ do (SoftEngine = {}) ->
                 # object space coordinates
                 if objSpace
                     for vertice in cMesh.Vertices
-                        projectedPoint = @project( vertice, transformMatrix )
+                        projectedPoint = @project( vertice, transformMatrix, worldMatrix )
                         @workingContext.fillText "(#{vertice.x},#{vertice.y},#{vertice.z})", projectedPoint.x, projectedPoint.y
 
                 # projected coordinates
                 else
                     for vertice in cMesh.Vertices
-                        projectedPoint = @project( vertice, transformMatrix )
+                        projectedPoint = @project( vertice, transformMatrix, worldMatrix )
                         @workingContext.fillText "(#{projectedPoint.x},#{projectedPoint.y})", projectedPoint.x, projectedPoint.y
 
             return
@@ -106,6 +111,7 @@ do (SoftEngine = {}) ->
                 Coordinates : new BABYLON.Vector3(x, y, point2d.z)
                 Normal : normal3DWorld
                 WorldCoordinates : point3DWorld
+                TextureCoordinates : vertex.TextureCoordinates
             })
 
         drawPoint : (point, color) ->
@@ -144,7 +150,7 @@ do (SoftEngine = {}) ->
 
                     color = 1.0;
 
-                    @drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1))
+                    @drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1), cMesh.Texture)
 
             return
 
@@ -159,7 +165,7 @@ do (SoftEngine = {}) ->
         # draw line between 2 points from left to right
         # papb -> pcpd
         # pa, pb, pc, pd must then be sorted before
-        processScanLine : (data, va, vb, vc, vd, color) ->
+        processScanLine : (data, va, vb, vc, vd, color, texture) ->
             pa = va.Coordinates
             pb = vb.Coordinates
             pc = vc.Coordinates
@@ -173,23 +179,42 @@ do (SoftEngine = {}) ->
             sx = @interpolate(pa.x, pb.x, gradient1) >> 0
             ex = @interpolate(pc.x, pd.x, gradient2) >> 0
 
-            # starting z and ending z
+            # starting Z and ending Z
             z1 = @interpolate(pa.z, pb.z, gradient1)
             z2 = @interpolate(pc.z, pd.z, gradient2)
 
+            # interpolate normals on Y
             snl = @interpolate(data.ndotla, data.ndotlb, gradient1)
             enl = @interpolate(data.ndotlc, data.ndotld, gradient2)
+
+            # interpolate texture coordinates on Y
+            su = @interpolate(data.ua, data.ub, gradient1)
+            eu = @interpolate(data.uc, data.ud, gradient2)
+            sv = @interpolate(data.va, data.vb, gradient1)
+            ev = @interpolate(data.vc, data.vd, gradient2)
 
             for x in [sx ... ex] by 1
                 gradient = (x - sx) / (ex - sx)
                 z = @interpolate(z1, z2, gradient)
                 ndotl = @interpolate(snl, enl, gradient)
+                u = @interpolate(su, eu, gradient)
+                v = @interpolate(sv, ev, gradient)
+
+                if texture
+                    textureColor = texture.map(u, v)
+                else
+                    textureColor = new BABYLON.Color4(1,1,1,1)
 
                 # changing the color value using the cosine of the angle
                 # between the light vector and the normal vector
                 @drawPoint(
                   new BABYLON.Vector3(x, data.currentY, z),
-                  new BABYLON.Color4(color.r * ndotl, color.g * ndotl, color.b * ndotl, 1)
+                  new BABYLON.Color4(
+                    color.r * ndotl * textureColor.r,
+                    color.g * ndotl * textureColor.g,
+                    color.b * ndotl * textureColor.b,
+                    1
+                  )
                 )
 
             return
@@ -204,7 +229,7 @@ do (SoftEngine = {}) ->
             return Math.max 0, BABYLON.Vector3.Dot(normal, lightDirection)
 
 
-        drawTriangle : (v1, v2, v3, color) ->
+        drawTriangle : (v1, v2, v3, color, texture) ->
 
             # Sorting the points in order to always have this order on screen p1, p2 & p3
             # with p1 always up (thus having the Y the lowest possible to be near the top screen)
@@ -255,13 +280,35 @@ do (SoftEngine = {}) ->
                         data.ndotlb = nl3
                         data.ndotlc = nl1
                         data.ndotld = nl2
-                        @processScanLine(data, v1, v3, v1, v2, color)
+
+                        data.ua = v1.TextureCoordinates.x
+                        data.ub = v3.TextureCoordinates.x
+                        data.uc = v1.TextureCoordinates.x
+                        data.ud = v2.TextureCoordinates.x
+
+                        data.va = v1.TextureCoordinates.y
+                        data.vb = v3.TextureCoordinates.y
+                        data.vc = v1.TextureCoordinates.y
+                        data.vd = v2.TextureCoordinates.y
+
+                        @processScanLine(data, v1, v3, v1, v2, color, texture)
                     else
                         data.ndotla = nl1
                         data.ndotlb = nl3
                         data.ndotlc = nl2
                         data.ndotld = nl3
-                        @processScanLine(data, v1, v3, v2, v3, color)
+
+                        data.ua = v1.TextureCoordinates.x
+                        data.ub = v3.TextureCoordinates.x
+                        data.uc = v2.TextureCoordinates.x
+                        data.ud = v3.TextureCoordinates.x
+
+                        data.va = v1.TextureCoordinates.y
+                        data.vb = v3.TextureCoordinates.y
+                        data.vc = v2.TextureCoordinates.y
+                        data.vd = v3.TextureCoordinates.y
+
+                        @processScanLine(data, v1, v3, v2, v3, color, texture)
 
                 return
 
@@ -288,13 +335,35 @@ do (SoftEngine = {}) ->
                         data.ndotlb = nl2
                         data.ndotlc = nl1
                         data.ndotld = nl3
-                        @processScanLine(data, v1, v2, v1, v3, color)
+
+                        data.ua = v1.TextureCoordinates.x
+                        data.ub = v2.TextureCoordinates.x
+                        data.uc = v1.TextureCoordinates.x
+                        data.ud = v3.TextureCoordinates.x
+
+                        data.va = v1.TextureCoordinates.y
+                        data.vb = v2.TextureCoordinates.y
+                        data.vc = v1.TextureCoordinates.y
+                        data.vd = v3.TextureCoordinates.y
+
+                        @processScanLine(data, v1, v2, v1, v3, color, texture)
                     else
                         data.ndotla = nl2
                         data.ndotlb = nl3
                         data.ndotlc = nl1
                         data.ndotld = nl3
-                        @processScanLine(data, v2, v3, v1, v3, color)
+
+                        data.ua = v2.TextureCoordinates.x
+                        data.ub = v3.TextureCoordinates.x
+                        data.uc = v1.TextureCoordinates.x
+                        data.ud = v3.TextureCoordinates.x
+
+                        data.va = v2.TextureCoordinates.y
+                        data.vb = v3.TextureCoordinates.y
+                        data.vc = v1.TextureCoordinates.y
+                        data.vd = v3.TextureCoordinates.y
+
+                        @processScanLine(data, v2, v3, v1, v3, color, texture)
 
                 return
 

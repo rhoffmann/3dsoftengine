@@ -17,11 +17,24 @@
       return xmlhttp.send(null);
     };
     return SoftEngine.Device.prototype.CreateMeshesFromJSON = function(jsonObject) {
-      var a, b, c, facesCount, importMesh, index, indicesArray, mesh, meshes, nx, ny, nz, position, uvCount, verticeStep, verticesArray, verticesCount, x, y, z, _i, _len, _ref;
+      var a, b, c, facesCount, importMesh, index, indicesArray, mat, material, materials, mesh, meshTextureID, meshTextureName, meshes, nx, ny, nz, position, u, uvCount, v, verticeStep, verticesArray, verticesCount, x, y, z, _i, _j, _len, _len2, _ref, _ref2;
       meshes = [];
-      _ref = jsonObject.meshes;
+      materials = [];
+      _ref = jsonObject.materials;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        importMesh = _ref[_i];
+        mat = _ref[_i];
+        material = {
+          Name: mat.name,
+          ID: mat.id
+        };
+        if (mat.diffuseTexture) {
+          material.DiffuseTextureName = mat.diffuseTexture.name;
+          materials[material.ID] = material;
+        }
+      }
+      _ref2 = jsonObject.meshes;
+      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+        importMesh = _ref2[_j];
         verticesArray = importMesh.vertices;
         indicesArray = importMesh.indices;
         uvCount = importMesh.uvCount;
@@ -51,9 +64,15 @@
           nz = verticesArray[index * verticeStep + 5];
           mesh.Vertices[index] = {
             Coordinates: new BABYLON.Vector3(x, y, z),
-            Normal: new BABYLON.Vector3(nx, ny, nz),
-            WorldCoordinates: null
+            Normal: new BABYLON.Vector3(nx, ny, nz)
           };
+          if (uvCount > 0) {
+            u = verticesArray[index * verticeStep + 6];
+            v = verticesArray[index * verticeStep + 7];
+            mesh.Vertices[index].TextureCoordinates = new BABYLON.Vector2(u, v);
+          } else {
+            mesh.Vertices[index].TextureCoordinates = new BABYLON.Vector2(0, 0);
+          }
         }
         for (index = 0; 0 <= facesCount ? index < facesCount : index > facesCount; 0 <= facesCount ? index++ : index--) {
           a = indicesArray[index * 3];
@@ -67,6 +86,11 @@
         }
         position = importMesh.position;
         mesh.Position = new BABYLON.Vector3(position[0], position[1], position[2]);
+        if (uvCount > 0) {
+          meshTextureID = importMesh.materialId;
+          meshTextureName = materials[meshTextureID].DiffuseTextureName;
+          mesh.Texture = new SoftEngine.Texture(meshTextureName, 512, 512);
+        }
         meshes.push(mesh);
       }
       return meshes;

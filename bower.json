@@ -15,6 +15,7 @@
     "tests"
   ],
   "dependencies": {
-    "leapjs": "~0.2.2"
+    "leapjs": "~0.2.2",
+    "underscore": "~1.5.2"
   }
 }

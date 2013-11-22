@@ -139,7 +139,7 @@
       };
 
       Device.prototype.processScanLine = function(data, va, vb, vc, vd, color) {
-        var ex, gradient, gradient1, gradient2, ndotl, pa, pb, pc, pd, sx, x, z, z1, z2;
+        var enl, ex, gradient, gradient1, gradient2, ndotl, pa, pb, pc, pd, snl, sx, x, z, z1, z2;
         pa = va.Coordinates;
         pb = vb.Coordinates;
         pc = vc.Coordinates;
@@ -150,10 +150,12 @@
         ex = this.interpolate(pc.x, pd.x, gradient2) >> 0;
         z1 = this.interpolate(pa.z, pb.z, gradient1);
         z2 = this.interpolate(pc.z, pd.z, gradient2);
+        snl = this.interpolate(data.ndotla, data.ndotlb, gradient1);
+        enl = this.interpolate(data.ndotlc, data.ndotld, gradient2);
         for (x = sx; x < ex; x += 1) {
           gradient = (x - sx) / (ex - sx);
           z = this.interpolate(z1, z2, gradient);
-          ndotl = data.ndotla;
+          ndotl = this.interpolate(snl, enl, gradient);
           this.drawPoint(new BABYLON.Vector3(x, data.currentY, z), new BABYLON.Color4(color.r * ndotl, color.g * ndotl, color.b * ndotl, 1));
         }
       };
@@ -167,7 +169,7 @@
       };
 
       Device.prototype.drawTriangle = function(v1, v2, v3, color) {
-        var centerPoint, dP1P2, dP1P3, data, lightPos, ndotl, p1, p1_y, p2, p3, p3_y, vnFace, y, _ref, _ref2, _ref3;
+        var dP1P2, dP1P3, data, lightPos, nl1, nl2, nl3, p1, p1_y, p2, p3, p3_y, y, _ref, _ref2, _ref3;
         if (v1.Coordinates.y > v2.Coordinates.y) {
           _ref = [v1, v2], v2 = _ref[0], v1 = _ref[1];
         }
@@ -180,13 +182,11 @@
         p1 = v1.Coordinates;
         p2 = v2.Coordinates;
         p3 = v3.Coordinates;
-        vnFace = (v1.Normal.add(v2.Normal.add(v3.Normal))).scale(1 / 3);
-        centerPoint = (v1.WorldCoordinates.add(v2.WorldCoordinates.add(v3.WorldCoordinates))).scale(1 / 3);
         lightPos = new BABYLON.Vector3(0, 10, 10);
-        ndotl = this.computeNDotL(centerPoint, vnFace, lightPos);
-        data = {
-          ndotla: ndotl
-        };
+        nl1 = this.computeNDotL(v1.WorldCoordinates, v1.Normal, lightPos);
+        nl2 = this.computeNDotL(v2.WorldCoordinates, v2.Normal, lightPos);
+        nl3 = this.computeNDotL(v3.WorldCoordinates, v3.Normal, lightPos);
+        data = {};
         dP1P2 = p2.y - p1.y > 0 ? (p2.x - p1.x) / (p2.y - p1.y) : 0;
         dP1P3 = p3.y - p1.y > 0 ? (p3.x - p1.x) / (p3.y - p1.y) : 0;
         if (dP1P2 > dP1P3) {
@@ -195,21 +195,35 @@
           for (y = p1_y; y <= p3_y; y += 1) {
             data.currentY = y;
             if (y < p2.y) {
+              data.ndotla = nl1;
+              data.ndotlb = nl3;
+              data.ndotlc = nl1;
+              data.ndotld = nl2;
               this.processScanLine(data, v1, v3, v1, v2, color);
             } else {
+              data.ndotla = nl1;
+              data.ndotlb = nl3;
+              data.ndotlc = nl2;
+              data.ndotld = nl3;
               this.processScanLine(data, v1, v3, v2, v3, color);
             }
           }
-          return;
-        }
-        if (dP1P2 < dP1P3) {
+        } else {
           p1_y = p1.y >> 0;
           p3_y = p3.y >> 0;
           for (y = p1_y; y <= p3_y; y += 1) {
             data.currentY = y;
             if (y < p2.y) {
+              data.ndotla = nl1;
+              data.ndotlb = nl2;
+              data.ndotlc = nl1;
+              data.ndotld = nl3;
               this.processScanLine(data, v1, v2, v1, v3, color);
             } else {
+              data.ndotla = nl2;
+              data.ndotlb = nl3;
+              data.ndotlc = nl1;
+              data.ndotld = nl3;
               this.processScanLine(data, v2, v3, v1, v3, color);
             }
           }

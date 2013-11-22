@@ -177,10 +177,13 @@ do (SoftEngine = {}) ->
             z1 = @interpolate(pa.z, pb.z, gradient1)
             z2 = @interpolate(pc.z, pd.z, gradient2)
 
+            snl = @interpolate(data.ndotla, data.ndotlb, gradient1)
+            enl = @interpolate(data.ndotlc, data.ndotld, gradient2)
+
             for x in [sx ... ex] by 1
                 gradient = (x - sx) / (ex - sx)
                 z = @interpolate(z1, z2, gradient)
-                ndotl = data.ndotla
+                ndotl = @interpolate(snl, enl, gradient)
 
                 # changing the color value using the cosine of the angle
                 # between the light vector and the normal vector
@@ -214,17 +217,16 @@ do (SoftEngine = {}) ->
             p2 = v2.Coordinates
             p3 = v3.Coordinates
 
-            # normal face's vector is the average normal between each vertex's normal
-            # computing also the center point of the face
-            vnFace = (v1.Normal.add(v2.Normal.add(v3.Normal))).scale(1 / 3)
-            centerPoint = (v1.WorldCoordinates.add(v2.WorldCoordinates.add(v3.WorldCoordinates))).scale(1 / 3)
-
+            # light position
             lightPos = new BABYLON.Vector3(0, 10, 10)
 
             # computing the cos of the angle between the light vector and the normal vector
             # it will return a value between 0 and 1 that will be used as the intensity of the color
-            ndotl = @computeNDotL(centerPoint, vnFace, lightPos)
-            data = { ndotla : ndotl }
+            nl1 = @computeNDotL(v1.WorldCoordinates, v1.Normal, lightPos)
+            nl2 = @computeNDotL(v2.WorldCoordinates, v2.Normal, lightPos)
+            nl3 = @computeNDotL(v3.WorldCoordinates, v3.Normal, lightPos)
+
+            data = {}
 
             # inverse slopes
             dP1P2 = if (p2.y - p1.y > 0) then (p2.x - p1.x) / (p2.y - p1.y) else 0
@@ -249,8 +251,16 @@ do (SoftEngine = {}) ->
                 for y in [p1_y .. p3_y] by 1
                     data.currentY = y
                     if y < p2.y
+                        data.ndotla = nl1
+                        data.ndotlb = nl3
+                        data.ndotlc = nl1
+                        data.ndotld = nl2
                         @processScanLine(data, v1, v3, v1, v2, color)
                     else
+                        data.ndotla = nl1
+                        data.ndotlb = nl3
+                        data.ndotlc = nl2
+                        data.ndotld = nl3
                         @processScanLine(data, v1, v3, v2, v3, color)
 
                 return
@@ -268,14 +278,22 @@ do (SoftEngine = {}) ->
             #        -
             #       P3
 
-            if dP1P2 < dP1P3
+            else
                 p1_y = p1.y >> 0
                 p3_y = p3.y >> 0
                 for y in [p1_y .. p3_y] by 1
                     data.currentY = y
                     if y < p2.y
+                        data.ndotla = nl1
+                        data.ndotlb = nl2
+                        data.ndotlc = nl1
+                        data.ndotld = nl3
                         @processScanLine(data, v1, v2, v1, v3, color)
                     else
+                        data.ndotla = nl2
+                        data.ndotlb = nl3
+                        data.ndotlc = nl1
+                        data.ndotld = nl3
                         @processScanLine(data, v2, v3, v1, v3, color)
 
                 return

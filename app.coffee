@@ -22,6 +22,9 @@ init = ->
     cam.Target = new BABYLON.Vector3(0, 0, 0)
 
     device.LoadJSONFile "suzanne.babylon", (meshesLoaded) ->
+        console.log "meshes loaded"
+        console.dir meshesLoaded
+
         meshes = meshesLoaded
         requestAnimationFrame( drawingLoop )
 

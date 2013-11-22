@@ -17,7 +17,7 @@
       return xmlhttp.send(null);
     };
     return SoftEngine.Device.prototype.CreateMeshesFromJSON = function(jsonObject) {
-      var a, b, c, facesCount, importMesh, index, indicesArray, mesh, meshes, position, uvCount, verticeStep, verticesArray, verticesCount, x, y, z, _i, _len, _ref;
+      var a, b, c, facesCount, importMesh, index, indicesArray, mesh, meshes, nx, ny, nz, position, uvCount, verticeStep, verticesArray, verticesCount, x, y, z, _i, _len, _ref;
       meshes = [];
       _ref = jsonObject.meshes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -46,7 +46,14 @@
           x = verticesArray[index * verticeStep];
           y = verticesArray[index * verticeStep + 1];
           z = verticesArray[index * verticeStep + 2];
-          mesh.Vertices[index] = new BABYLON.Vector3(x, y, z);
+          nx = verticesArray[index * verticeStep + 3];
+          ny = verticesArray[index * verticeStep + 4];
+          nz = verticesArray[index * verticeStep + 5];
+          mesh.Vertices[index] = {
+            Coordinates: new BABYLON.Vector3(x, y, z),
+            Normal: new BABYLON.Vector3(nx, ny, nz),
+            WorldCoordinates: null
+          };
         }
         for (index = 0; 0 <= facesCount ? index < facesCount : index > facesCount; 0 <= facesCount ? index++ : index--) {
           a = indicesArray[index * 3];

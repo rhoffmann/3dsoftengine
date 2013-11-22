@@ -47,7 +47,17 @@ do (SoftEngine = {}) ->
                 x = verticesArray[index * verticeStep]
                 y = verticesArray[index * verticeStep + 1]
                 z = verticesArray[index * verticeStep + 2]
-                mesh.Vertices[index] = new BABYLON.Vector3(x, y, z)
+
+                # load the vertex normal exportet by blender
+                nx = verticesArray[index * verticeStep + 3]
+                ny = verticesArray[index * verticeStep + 4]
+                nz = verticesArray[index * verticeStep + 5]
+
+                mesh.Vertices[index] = {
+                    Coordinates : new BABYLON.Vector3(x, y, z)
+                    Normal : new BABYLON.Vector3(nx, ny, nz)
+                    WorldCoordinates : null
+                }
 
             # fill the faces array
             for index in [0 ... facesCount]

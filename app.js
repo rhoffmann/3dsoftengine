@@ -24,6 +24,8 @@
     cam.Position = new BABYLON.Vector3(0, 0, 10);
     cam.Target = new BABYLON.Vector3(0, 0, 0);
     return device.LoadJSONFile("suzanne.babylon", function(meshesLoaded) {
+      console.log("meshes loaded");
+      console.dir(meshesLoaded);
       meshes = meshesLoaded;
       return requestAnimationFrame(drawingLoop);
     });

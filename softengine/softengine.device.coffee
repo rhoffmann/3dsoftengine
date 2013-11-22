@@ -84,15 +84,29 @@ do (SoftEngine = {}) ->
             @backbufferdata[index4 + 2]  = color.b * 255
             @backbufferdata[index4 + 3]  = color.a * 255
 
-        project : (coord, transMat) ->
-            point = BABYLON.Vector3.TransformCoordinates(coord, transMat)
+        # Project takes some 3D coordinates and transform them
+        # in 2D coordinates using the transformation matrix
+        # It also transform the same coordinates and the normal to the vertex
+        # in the 3D world
+        project : (vertex, transMat, world) ->
+            # transform coordinates into 2D space
+            point2d = BABYLON.Vector3.TransformCoordinates(vertex.Coordinates, transMat)
+
+            # transforming the coordinates & the normal to the vertex in the 3D world
+            point3DWorld = BABYLON.Vector3.TransformCoordinates(vertex.Coordinates, world)
+            normal3DWorld = BABYLON.Vector3.TransformCoordinates(vertex.Normal, world)
+
             # The transformed coordinates will be based on coordinate system
             # starting on the center of the screen. But drawing on screen normally starts
             # from top left. We then need to transform them again to have x:0, y:0 on top left.
-            x =  point.x * @workingWidth + @workingWidth / 2.0
-            y = -point.y * @workingHeight + @workingHeight / 2.0
+            x =  point2d.x * @workingWidth + @workingWidth / 2.0
+            y = -point2d.y * @workingHeight + @workingHeight / 2.0
 
-            return new BABYLON.Vector3(x, y, point.z)
+            return ({
+                Coordinates : new BABYLON.Vector3(x, y, point2d.z)
+                Normal : normal3DWorld
+                WorldCoordinates : point3DWorld
+            })
 
         drawPoint : (point, color) ->
             if point.x >= 0 and point.y >= 0 and point.x < @workingWidth and point.y < @workingHeight
@@ -100,6 +114,7 @@ do (SoftEngine = {}) ->
 
         render : (camera, meshes) ->
             viewMatrix = BABYLON.Matrix.LookAtLH( camera.Position, camera.Target, BABYLON.Vector3.Up() )
+
             projectionMatrix = BABYLON.Matrix.PerspectiveFovLH( 0.78, @workingWidth / @workingHeight, 0.01, 1.0 )
 
             for cMesh in meshes
@@ -123,13 +138,13 @@ do (SoftEngine = {}) ->
                     vertexB = cMesh.Vertices[currentFace.B]
                     vertexC = cMesh.Vertices[currentFace.C]
 
-                    pA = @project( vertexA, transformMatrix )
-                    pB = @project( vertexB, transformMatrix )
-                    pC = @project( vertexC, transformMatrix )
+                    pA = @project( vertexA, transformMatrix, worldMatrix )
+                    pB = @project( vertexB, transformMatrix, worldMatrix )
+                    pC = @project( vertexC, transformMatrix, worldMatrix )
 
-                    color = 0.25 + ((indexFaces % cMesh.Faces.length) / cMesh.Faces.length) * 0.75
+                    color = 1.0;
 
-                    @drawTriangle(pA, pB, pC, new BABYLON.Color4(1, color, color, 1))
+                    @drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1))
 
             return
 
@@ -144,12 +159,17 @@ do (SoftEngine = {}) ->
         # draw line between 2 points from left to right
         # papb -> pcpd
         # pa, pb, pc, pd must then be sorted before
-        processScanLine : (y, pa, pb, pc, pd, color) ->
+        processScanLine : (data, va, vb, vc, vd, color) ->
+            pa = va.Coordinates
+            pb = vb.Coordinates
+            pc = vc.Coordinates
+            pd = vd.Coordinates
+
             # Thanks to current Y, we can compute the gradient to compute others values like
             # the starting X (sx) and ending X (ex) to draw between
             # if pa.Y == pb.Y or pc.Y == pd.Y, gradient is forced to 1
-            gradient1 = if `pa.y != pb.y` then (y - pa.y) / (pb.y - pa.y) else 1
-            gradient2 = if `pc.y != pd.y` then (y - pc.y) / (pd.y - pc.y) else 1
+            gradient1 = if `pa.y != pb.y` then (data.currentY - pa.y) / (pb.y - pa.y) else 1
+            gradient2 = if `pc.y != pd.y` then (data.currentY - pc.y) / (pd.y - pc.y) else 1
             sx = @interpolate(pa.x, pb.x, gradient1) >> 0
             ex = @interpolate(pc.x, pd.x, gradient2) >> 0
 
@@ -160,18 +180,51 @@ do (SoftEngine = {}) ->
             for x in [sx ... ex] by 1
                 gradient = (x - sx) / (ex - sx)
                 z = @interpolate(z1, z2, gradient)
-                @drawPoint(new BABYLON.Vector3(x, y, z), color)
+                ndotl = data.ndotla
+
+                # changing the color value using the cosine of the angle
+                # between the light vector and the normal vector
+                @drawPoint(
+                  new BABYLON.Vector3(x, data.currentY, z),
+                  new BABYLON.Color4(color.r * ndotl, color.g * ndotl, color.b * ndotl, 1)
+                )
 
             return
 
-        drawTriangle : (p1, p2, p3, color) ->
+
+        # Compute the cosine of the angle between the light vector and the normal vector
+        # Returns a value between 0 and 1
+        computeNDotL : (vertex, normal, lightPosition) ->
+            lightDirection = lightPosition.subtract(vertex)
+            normal.normalize()
+            lightDirection.normalize()
+            return Math.max 0, BABYLON.Vector3.Dot(normal, lightDirection)
+
+
+        drawTriangle : (v1, v2, v3, color) ->
 
             # Sorting the points in order to always have this order on screen p1, p2 & p3
             # with p1 always up (thus having the Y the lowest possible to be near the top screen)
             # then p2 between p1 & p3
-            [p2, p1] = [p1, p2] if p1.y > p2.y
-            [p2, p3] = [p3, p2] if p2.y > p3.y
-            [p2, p1] = [p1, p2] if p1.y > p2.y
+            [v2, v1] = [v1, v2] if v1.Coordinates.y > v2.Coordinates.y
+            [v2, v3] = [v3, v2] if v2.Coordinates.y > v3.Coordinates.y
+            [v2, v1] = [v1, v2] if v1.Coordinates.y > v2.Coordinates.y
+
+            p1 = v1.Coordinates
+            p2 = v2.Coordinates
+            p3 = v3.Coordinates
+
+            # normal face's vector is the average normal between each vertex's normal
+            # computing also the center point of the face
+            vnFace = (v1.Normal.add(v2.Normal.add(v3.Normal))).scale(1 / 3)
+            centerPoint = (v1.WorldCoordinates.add(v2.WorldCoordinates.add(v3.WorldCoordinates))).scale(1 / 3)
+
+            lightPos = new BABYLON.Vector3(0, 10, 10)
+
+            # computing the cos of the angle between the light vector and the normal vector
+            # it will return a value between 0 and 1 that will be used as the intensity of the color
+            ndotl = @computeNDotL(centerPoint, vnFace, lightPos)
+            data = { ndotla : ndotl }
 
             # inverse slopes
             dP1P2 = if (p2.y - p1.y > 0) then (p2.x - p1.x) / (p2.y - p1.y) else 0
@@ -194,10 +247,11 @@ do (SoftEngine = {}) ->
                 p1_y = p1.y >> 0
                 p3_y = p3.y >> 0
                 for y in [p1_y .. p3_y] by 1
+                    data.currentY = y
                     if y < p2.y
-                        @processScanLine(y, p1, p3, p1, p2, color)
+                        @processScanLine(data, v1, v3, v1, v2, color)
                     else
-                        @processScanLine(y, p1, p3, p2, p3, color)
+                        @processScanLine(data, v1, v3, v2, v3, color)
 
                 return
 
@@ -218,10 +272,11 @@ do (SoftEngine = {}) ->
                 p1_y = p1.y >> 0
                 p3_y = p3.y >> 0
                 for y in [p1_y .. p3_y] by 1
+                    data.currentY = y
                     if y < p2.y
-                        @processScanLine(y, p1, p2, p1, p3, color)
+                        @processScanLine(data, v1, v2, v1, v3, color)
                     else
-                        @processScanLine(y, p2, p3, p1, p3, color)
+                        @processScanLine(data, v2, v3, v1, v3, color)
 
                 return
 

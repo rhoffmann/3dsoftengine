@@ -2,7 +2,7 @@
   "name": "3dsoftengine",
   "version": "0.0.0",
   "authors": [
-    "Richard Hoffmann <r.hoffmann@einwaage.de>"
+    "Richard Hoffmann <rjh.hoffmann@gmail.com>"
   ],
   "main": "app.js",
   "license": "MIT",
@@ -14,7 +14,7 @@
     "test",
     "tests"
   ],
-  "dependencies" : {
-
+  "dependencies": {
+    "leapjs": "~0.2.2"
   }
 }

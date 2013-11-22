@@ -88,8 +88,8 @@
       Device.prototype.project = function(coord, transMat) {
         var point, x, y;
         point = BABYLON.Vector3.TransformCoordinates(coord, transMat);
-        x = point.x * this.workingWidth + this.workingWidth / 2.0 >> 0;
-        y = -point.y * this.workingHeight + this.workingHeight / 2.0 >> 0;
+        x = point.x * this.workingWidth + this.workingWidth / 2.0;
+        y = -point.y * this.workingHeight + this.workingHeight / 2.0;
         return new BABYLON.Vector3(x, y, point.z);
       };
 

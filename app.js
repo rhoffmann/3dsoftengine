@@ -11,6 +11,12 @@
 
   mesh = null;
 
+  window.requestAnimationFrame = (function() {
+    return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || function(callback) {
+      return window.setTimeout(callback, 1000 / 60);
+    };
+  })();
+
   init = function() {
     canvas = document.getElementById("scene");
     cam = new SoftEngine.Camera();
@@ -28,7 +34,6 @@
     device.clear();
     for (_i = 0, _len = meshes.length; _i < _len; _i++) {
       mesh = meshes[_i];
-      mesh.Rotation.x += 0.01;
       mesh.Rotation.y += 0.01;
     }
     device.render(cam, meshes);

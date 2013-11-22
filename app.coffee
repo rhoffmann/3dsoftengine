@@ -4,6 +4,14 @@ device = null
 cam = null
 mesh = null
 
+
+window.requestAnimationFrame = do ->
+    window.requestAnimationFrame or
+    window.webkitRequestAnimationFrame or
+    window.mozRequestAnimationFrame or
+    (callback) -> window.setTimeout(callback, 1000 / 60)
+
+
 init = ->
     canvas = document.getElementById("scene")
 
@@ -22,7 +30,7 @@ drawingLoop = ->
     device.clear()
 
     for mesh in meshes
-        mesh.Rotation.x += 0.01
+#        mesh.Rotation.x += 0.01
         mesh.Rotation.y += 0.01
 
     device.render(cam, meshes)

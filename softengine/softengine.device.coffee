@@ -89,8 +89,8 @@ do (SoftEngine = {}) ->
             # The transformed coordinates will be based on coordinate system
             # starting on the center of the screen. But drawing on screen normally starts
             # from top left. We then need to transform them again to have x:0, y:0 on top left.
-            x =  point.x * @workingWidth + @workingWidth / 2.0 >> 0
-            y = -point.y * @workingHeight + @workingHeight / 2.0 >> 0
+            x =  point.x * @workingWidth + @workingWidth / 2.0
+            y = -point.y * @workingHeight + @workingHeight / 2.0
 
             return new BABYLON.Vector3(x, y, point.z)
 

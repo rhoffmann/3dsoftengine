@@ -14,9 +14,8 @@ init = ->
     cam.Position = new BABYLON.Vector3(0, 0, 10)
     cam.Target = new BABYLON.Vector3(0, 0, 0)
 
-    device.LoadJSONFile "monkeyandball.babylon", (meshesLoaded) ->
+    device.LoadJSONFile "suzanne.babylon", (meshesLoaded) ->
         meshes = meshesLoaded
-        console.dir meshes
         requestAnimationFrame( drawingLoop )
 
 

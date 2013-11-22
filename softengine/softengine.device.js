@@ -94,27 +94,17 @@
         point = BABYLON.Vector3.TransformCoordinates(coord, transMat);
         x = point.x * this.workingWidth + this.workingWidth / 2.0 >> 0;
         y = -point.y * this.workingHeight + this.workingHeight / 2.0 >> 0;
-        return new BABYLON.Vector2(x, y);
+        return new BABYLON.Vector2(x, y, point.z);
       };
 
-      Device.prototype.drawPoint = function(point) {
+      Device.prototype.drawPoint = function(point, color) {
         if (point.x >= 0 && point.y >= 0 && point.x < this.workingWidth && point.y < this.workingHeight) {
-          return this.putPixel(point.x, point.y, new BABYLON.Color4(1, 0, 0, 1));
+          return this.putPixel(point.x, point.y, color);
         }
       };
 
-      Device.prototype.drawLine = function(p0, p1) {
-        var dist, middlePoint;
-        dist = p1.subtract(p0).length();
-        if (dist < 2) return;
-        middlePoint = p0.add(p1.subtract(p0).scale(0.5));
-        this.drawPoint(middlePoint);
-        this.drawLine(p0, middlePoint);
-        return this.drawLine(middlePoint, p1);
-      };
-
       Device.prototype.render = function(camera, meshes) {
-        var cMesh, currentFace, pA, pB, pC, projectionMatrix, transformMatrix, vertexA, vertexB, vertexC, viewMatrix, worldMatrix, _i, _len, _results;
+        var cMesh, color, currentFace, indexFaces, pA, pB, pC, projectionMatrix, transformMatrix, vertexA, vertexB, vertexC, viewMatrix, worldMatrix, _i, _len, _results;
         viewMatrix = BABYLON.Matrix.LookAtLH(camera.Position, camera.Target, BABYLON.Vector3.Up());
         projectionMatrix = BABYLON.Matrix.PerspectiveFovLH(0.78, this.workingWidth / this.workingHeight, 0.01, 1.0);
         _results = [];
@@ -123,25 +113,76 @@
           worldMatrix = BABYLON.Matrix.RotationYawPitchRoll(cMesh.Rotation.y, cMesh.Rotation.x, cMesh.Rotation.z).multiply(BABYLON.Matrix.Translation(cMesh.Position.x, cMesh.Position.y, cMesh.Position.z));
           transformMatrix = worldMatrix.multiply(viewMatrix).multiply(projectionMatrix);
           _results.push((function() {
-            var _j, _len2, _ref, _results2;
+            var _len2, _ref, _results2;
             _ref = cMesh.Faces;
             _results2 = [];
-            for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
-              currentFace = _ref[_j];
+            for (indexFaces = 0, _len2 = _ref.length; indexFaces < _len2; indexFaces++) {
+              currentFace = _ref[indexFaces];
               vertexA = cMesh.Vertices[currentFace.A];
               vertexB = cMesh.Vertices[currentFace.B];
               vertexC = cMesh.Vertices[currentFace.C];
               pA = this.project(vertexA, transformMatrix);
               pB = this.project(vertexB, transformMatrix);
               pC = this.project(vertexC, transformMatrix);
-              this.drawBLine(pA, pB);
-              this.drawBLine(pB, pC);
-              _results2.push(this.drawBLine(pC, pA));
+              color = 0.25 + ((indexFaces % cMesh.Faces.length) / cMesh.Faces.length) * 0.75;
+              _results2.push(this.drawTriangle(pA, pB, pC, new BABYLON.Color4(color, color, color, 1)));
             }
             return _results2;
           }).call(this));
         }
         return _results;
+      };
+
+      Device.prototype.clamp = function(value, min, max) {
+        if (min == null) min = 0;
+        if (max == null) max = 1;
+        return Math.max(min, Math.min(value, max));
+      };
+
+      Device.prototype.interpolate = function(min, max, gradient) {
+        return min + (max - min) * this.clamp(gradient);
+      };
+
+      Device.prototype.processScanLine = function(y, pa, pb, pc, pd, color) {
+        var ex, gradient1, gradient2, sx, x, _results;
+        gradient1 = pa.y !== pb.y ? (y - pa.y) / (pb.y - pa.y) : 1;
+        gradient2 = pc.y !== pd.y ? (y - pc.y) / (pd.y - pc.y) : 1;
+        sx = this.interpolate(pa.x, pb.x, gradient1) >> 0;
+        ex = this.interpolate(pc.x, pd.x, gradient2) >> 0;
+        _results = [];
+        for (x = sx; sx <= ex ? x <= ex : x >= ex; sx <= ex ? x++ : x--) {
+          _results.push(this.drawPoint(new BABYLON.Vector2(x, y), color));
+        }
+        return _results;
+      };
+
+      Device.prototype.drawTriangle = function(p1, p2, p3, color) {
+        var dP1P2, dP1P3, y, _ref, _ref2, _ref3, _ref4, _ref5, _ref6, _ref7, _results;
+        if (p1.y > p2.y) _ref = [p1, p2], p2 = _ref[0], p1 = _ref[1];
+        if (p2.y > p3.y) _ref2 = [p3, p2], p2 = _ref2[0], p3 = _ref2[1];
+        if (p1.y > p2.y) _ref3 = [p1, p2], p2 = _ref3[0], p1 = _ref3[1];
+        dP1P2 = p2.y - p1.y > 0 ? (p2.x - p1.x) / (p2.y - p1.y) : 0;
+        dP1P3 = p3.y - p1.y > 0 ? (p3.x - p1.x) / (p3.y - p1.y) : 0;
+        if (dP1P2 > dP1P3) {
+          for (y = _ref4 = p1.y >> 0, _ref5 = p3.y >> 0; _ref4 <= _ref5 ? y < _ref5 : y > _ref5; _ref4 <= _ref5 ? y++ : y--) {
+            if (y < p2.y) {
+              this.processScanLine(y, p1, p3, p1, p2, color);
+            } else {
+              this.processScanLine(y, p1, p3, p2, p3, color);
+            }
+          }
+        }
+        if (dP1P2 < dP1P3) {
+          _results = [];
+          for (y = _ref6 = p1.y >> 0, _ref7 = p3.y >> 0; _ref6 <= _ref7 ? y < _ref7 : y > _ref7; _ref6 <= _ref7 ? y++ : y--) {
+            if (y < p2.y) {
+              _results.push(this.processScanLine(y, p1, p2, p1, p3, color));
+            } else {
+              _results.push(this.processScanLine(y, p2, p3, p1, p3, color));
+            }
+          }
+          return _results;
+        }
       };
 
       return Device;

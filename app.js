@@ -18,9 +18,8 @@
     device = new SoftEngine.Device(canvas, true);
     cam.Position = new BABYLON.Vector3(0, 0, 10);
     cam.Target = new BABYLON.Vector3(0, 0, 0);
-    return device.LoadJSONFile("monkeyandball.babylon", function(meshesLoaded) {
+    return device.LoadJSONFile("suzanne.babylon", function(meshesLoaded) {
       meshes = meshesLoaded;
-      console.dir(meshes);
       return requestAnimationFrame(drawingLoop);
     });
   };
